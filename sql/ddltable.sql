@@ -1,0 +1,214 @@
+DROP TABLE IF EXISTS complaint;
+DROP TABLE IF EXISTS masterCard;
+DROP TABLE IF EXISTS user;
+DROP TABLE IF EXISTS schedule_stop;
+DROP TABLE IF EXISTS trip;
+DROP TABLE IF EXISTS train;
+DROP TABLE IF EXISTS station;
+DROP TABLE IF EXISTS admin;
+
+
+CREATE TABLE user (
+uId INT PRIMARY KEY NOT NULL,
+uName VARCHAR (50) NOT NULL,
+uDob DATE NOT NULL,
+uSex CHAR (1) NOT NULL,
+mobile INT NOT NULL,
+email VARCHAR (50) NOT NULL,
+uPassword VARCHAR (15) NOT NULL);
+
+CREATE TABLE complaint (
+id INT PRIMARY KEY NOT NULL,
+descr VARCHAR (100) NOT NULL,
+uId INT NOT NULL,
+reply VARCHAR (100) NOT NULL,
+FOREIGN KEY(uId) REFERENCES user(uId));
+
+CREATE TABLE masterCard (
+cId INT PRIMARY KEY NOT NULL,
+cNo INT NOT NULL,
+cStatus INT NOT NULL,
+expDate DATE NOT NULL,
+uId INT NOT NULL,
+FOREIGN KEY(uId) REFERENCES user(uId));
+
+CREATE TABLE admin (
+aId INT PRIMARY KEY NOT NULL,
+aPassword VARCHAR (50) NOT NULL);
+
+CREATE TABLE station (
+sId INT PRIMARY KEY NOT NULL,
+sName VARCHAR (20) NOT NULL,
+dist DOUBLE NOT NULL,
+route INT NOT NULL);
+
+CREATE TABLE train (
+tId INT PRIMARY KEY NOT NULL,
+tName VARCHAR(20) NOT NULL UNIQUE,
+s_station INT NOT NULL,
+e_station INT NOT NULL,
+FOREIGN KEY(s_station) REFERENCES station(sId),
+FOREIGN KEY(e_station) REFERENCES station(sId));
+
+CREATE TABLE trip (
+trId INT PRIMARY KEY NOT NULL,
+s_station INT NOT NULL,
+e_station INT NOT NULL,
+cost DOUBLE NOT NULL,
+tId INT NOT NULL,
+FOREIGN KEY(s_station) REFERENCES station(sId),
+FOREIGN KEY(e_station) REFERENCES station(sId),
+FOREIGN KEY(tId) REFERENCES train(tId));
+
+CREATE TABLE schedule_stop (
+tId INT NOT NULL,
+sId INT NOT NULL,
+a_time TIME NOT NULL,
+d_time TIME NOT NULL,
+stop_count INT NOT NULL,
+PRIMARY KEY (tId,sId),
+FOREIGN KEY(tId) REFERENCES train(tId),
+FOREIGN KEY(sId) REFERENCES station(sId));
+
+INSERT INTO station VALUES(1,"Nagole",0,1);
+INSERT INTO station VALUES(2,"Uppal",1.3,1);
+INSERT INTO station VALUES(3,"Stadium",2.5,1);
+INSERT INTO station VALUES(4,"NGRI",3.8,1);
+INSERT INTO station VALUES(5,"Habsiguda",4.9,1);
+INSERT INTO station VALUES(6,"Tarnaka",6.0,1);
+INSERT INTO station VALUES(7,"Mettuguda",8.2,1);
+INSERT INTO station VALUES(8,"Secundrabad",10.7,1);
+INSERT INTO station VALUES(9,"Paradise",14.1,1);
+INSERT INTO station VALUES(10,"Rasoolpura",15.6,1);
+INSERT INTO station VALUES(11,"Prakash Nagar",17.0,1);
+INSERT INTO station VALUES(12,"Begumpet",18.1,1);
+INSERT INTO station VALUES(13,"Ameerpet",19.1,1);
+INSERT INTO station VALUES(14,"Modhura Nagar",21.0,1);
+INSERT INTO station VALUES(15,"Yusufguda",22.5,1);
+INSERT INTO station VALUES(16,"Rd.5 Jubliee Hills",24.2,1);
+INSERT INTO station VALUES(17,"Jubliee Check Post",25.5,1);
+INSERT INTO station VALUES(18,"Peddamma Gudi",26.7,1);
+INSERT INTO station VALUES(19,"Madhapur",27.4,1);
+INSERT INTO station VALUES(20,"Durgam Cheruvu",28.4,1);
+INSERT INTO station VALUES(21,"HITEC CITY",29,1);
+
+INSERT INTO train VALUES(12478,"Train 1",1,21);
+INSERT INTO train VALUES(12312,"Train 2",21,1);
+INSERT INTO train VALUES(12637,"Train 3",1,21);
+INSERT INTO train VALUES(12589,"Train 4",21,1);
+INSERT INTO train VALUES(83489,"Train 5",1,21);
+
+INSERT INTO schedule_stop VALUES(12478,1,"02:00:00","02:00:00",1);
+INSERT INTO schedule_stop VALUES(12478,2,"02:22:00","02:24:00",2);
+INSERT INTO schedule_stop VALUES(12478,3,"02:45:00","02:47:00",3);
+INSERT INTO schedule_stop VALUES(12478,4,"03:10:00","03:11:00",4);
+INSERT INTO schedule_stop VALUES(12478,5,"03:34:00","03:35:00",5);
+INSERT INTO schedule_stop VALUES(12478,6,"03:59:00","04:02:00",6);
+INSERT INTO schedule_stop VALUES(12478,8,"04:30:00","04:40:00",7);
+INSERT INTO schedule_stop VALUES(12478,9,"04:58:00","05:01:00",8);
+INSERT INTO schedule_stop VALUES(12478,12,"06:43:00","06:48:00",9);
+INSERT INTO schedule_stop VALUES(12478,13,"07:20:00","07:25:00",10);
+INSERT INTO schedule_stop VALUES(12478,14,"08:00:00","08:11:00",11);
+INSERT INTO schedule_stop VALUES(12478,15,"08:29:00","08:31:00",12);
+INSERT INTO schedule_stop VALUES(12478,16,"09:02:00","09:03:00",13);
+INSERT INTO schedule_stop VALUES(12478,18,"10:12:00","10:13:00",14);
+INSERT INTO schedule_stop VALUES(12478,19,"10:29:00","10:30:00",15);
+INSERT INTO schedule_stop VALUES(12478,20,"10:51:00","10:52:00",16);
+INSERT INTO schedule_stop VALUES(12478,21,"11:15:00","00:00:00",17);
+
+INSERT INTO schedule_stop VALUES(12312,21,"13:00:00","13:00:00",1);
+INSERT INTO schedule_stop VALUES(12312,18,"14:12:00","14:15:00",2);
+INSERT INTO schedule_stop VALUES(12312,17,"14:47:00","14:57:00",3);
+INSERT INTO schedule_stop VALUES(12312,16,"15:33:00","15:38:00",4);
+INSERT INTO schedule_stop VALUES(12312,14,"16:12:00","16:13:00",5);
+INSERT INTO schedule_stop VALUES(12312,13,"14:41:00","16:42:00",6);
+INSERT INTO schedule_stop VALUES(12312,11,"16:51:00","16:59:00",7);
+INSERT INTO schedule_stop VALUES(12312,10,"17:21:00","17:22:00",8);
+INSERT INTO schedule_stop VALUES(12312,9,"17:38:00","17:40:00",9);
+INSERT INTO schedule_stop VALUES(12312,6,"18:29:00","18:33:00",10);
+INSERT INTO schedule_stop VALUES(12312,5,"18:51:00","18:52:00",11);
+INSERT INTO schedule_stop VALUES(12312,4,"19:11:00","19:22:00",12);
+INSERT INTO schedule_stop VALUES(12312,3,"19:35:00","19:36:00",13);
+INSERT INTO schedule_stop VALUES(12312,1,"20:01:00","00:00:00",14);
+
+INSERT INTO schedule_stop VALUES(12637,1,"13:42:00","03:42:00",1);
+INSERT INTO schedule_stop VALUES(12637,2,"04:01:00","04:10:00",2);
+INSERT INTO schedule_stop VALUES(12637,4,"04:42:00","04:47:00",3);
+INSERT INTO schedule_stop VALUES(12637,5,"05:08:00","05:11:00",4);
+INSERT INTO schedule_stop VALUES(12637,7,"06:12:00","06:13:00",5);
+INSERT INTO schedule_stop VALUES(12637,8,"07:00:00","07:02:00",6);
+INSERT INTO schedule_stop VALUES(12637,9,"07:31:00","07:33:00",7);
+INSERT INTO schedule_stop VALUES(12637,11,"07:58:00","08:01:00",8);
+INSERT INTO schedule_stop VALUES(12637,12,"08:33:00","08:34:00",9);
+INSERT INTO schedule_stop VALUES(12637,13,"08:44:00","08:49:00",10);
+INSERT INTO schedule_stop VALUES(12637,15,"09:22:00","09:23:00",11);
+INSERT INTO schedule_stop VALUES(12637,16,"09:46:00","09:51:00",12);
+INSERT INTO schedule_stop VALUES(12637,17,"10:28:00","10:30:00",13);
+INSERT INTO schedule_stop VALUES(12637,19,"10:44:00","10:57:00",14);
+INSERT INTO schedule_stop VALUES(12637,20,"11:23:00","11:30:00",15);
+INSERT INTO schedule_stop VALUES(12637,21,"12:02:00","00:00:00",16);
+
+INSERT INTO schedule_stop VALUES(12589,21,"16:30:00","16:30:00",1);
+INSERT INTO schedule_stop VALUES(12589,20,"16:47:00","16:55:00",2);
+INSERT INTO schedule_stop VALUES(12589,19,"17:23:00","17:32:00",3);
+INSERT INTO schedule_stop VALUES(12589,18,"18:06:00","18:10:00",4);
+INSERT INTO schedule_stop VALUES(12589,16,"18:22:00","18:34:00",5);
+INSERT INTO schedule_stop VALUES(12589,15,"18:49:00","18:55:00",6);
+INSERT INTO schedule_stop VALUES(12589,14,"19:33:00","19:40:00",7);
+INSERT INTO schedule_stop VALUES(12589,12,"20:18:00","20:00:00",8);
+INSERT INTO schedule_stop VALUES(12589,10,"20:56:00","21:00:00",9);
+INSERT INTO schedule_stop VALUES(12589,9,"21:21:00","21:25:00",10);
+INSERT INTO schedule_stop VALUES(12589,7,"21:46:00","21:50:00",11);
+INSERT INTO schedule_stop VALUES(12589,6,"22:17:00","22:22:00",12);
+INSERT INTO schedule_stop VALUES(12589,5,"23:03:00","23:13:00",13);
+INSERT INTO schedule_stop VALUES(12589,2,"00:36:00","00:42:00",14);
+INSERT INTO schedule_stop VALUES(12589,1,"01:10:00","00:00:00",15);
+
+INSERT INTO schedule_stop VALUES(83489,1,"06:00:00","06:00:00",1);
+INSERT INTO schedule_stop VALUES(83489,2,"06:25:00","06:29:00",2);
+INSERT INTO schedule_stop VALUES(83489,3,"07:11:00","07:12:00",3);
+INSERT INTO schedule_stop VALUES(83489,4,"07:29:00","07:33:00",4);
+INSERT INTO schedule_stop VALUES(83489,6,"08:05:00","08:10:00",5);
+INSERT INTO schedule_stop VALUES(83489,7,"08:32:00","08:33:00",6);
+INSERT INTO schedule_stop VALUES(83489,10,"10:04:00","10:12:00",7);
+INSERT INTO schedule_stop VALUES(83489,11,"10:54:00","10:58:00",8);
+INSERT INTO schedule_stop VALUES(83489,12,"10:48:00","10:50:00",9);
+INSERT INTO schedule_stop VALUES(83489,13,"12:24:00","12:25:00",10);
+INSERT INTO schedule_stop VALUES(83489,14,"13:35:00","12:39:00",11);
+INSERT INTO schedule_stop VALUES(83489,16,"13:19:00","13:22:00",12);
+INSERT INTO schedule_stop VALUES(83489,17,"14:04:00","14:24:00",13);
+INSERT INTO schedule_stop VALUES(83489,18,"15:31:00","15:40:00",14);
+INSERT INTO schedule_stop VALUES(83489,20,"16:00:00","16:20:00",15);
+INSERT INTO schedule_stop VALUES(83489,21,"16:43:00","00:00:00",16);
+
+DROP PROCEDURE IF EXISTS cost;
+DROP PROCEDURE IF EXISTS trains;
+
+DELIMITER $$
+CREATE PROCEDURE cost(in ss int ,in es int)
+BEGIN
+	SET @sdist = (SELECT dist FROM station WHERE sId = ss);
+	SET @edist = (SELECT dist FROM station WHERE sId = es);
+	SET @diff = NULL;
+	SET @cost = NULL;
+	IF @sdist < @edist THEN
+		SET @diff = @edist-@sdist;
+	ELSE 
+		SET @diff = @sdist-@edist;
+	END IF;
+	IF @diff < 15 THEN
+		SET @cost = 10;
+	ELSE
+		SET @cost = 30;
+	END IF;
+	SELECT @cost as cost;
+END $$
+
+CREATE PROCEDURE trains(in ss int,in es int)
+BEGIN
+	SELECT s1.tId, s1.a_time sa, s2.a_time ea
+	FROM schedule_stop s1, schedule_stop s2
+	WHERE s1.tId = s2.tId AND s1.sId = ss and s2.sId = es and s1.stop_count < s2.stop_count;
+END $$
+
+DELIMITER ;
