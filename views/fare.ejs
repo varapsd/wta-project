@@ -24,6 +24,29 @@
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script>
+    	function get_fare(){
+			var request = new XMLHttpRequest();
+			var stStation = document.getElementById('from').value.split("-");
+			var esStation = document.getElementById('to').value.split("-");
+			var ss = stStation[0];
+			var es = esStation[0];
+			var params =  "ss="+ss+"&es="+es;
+			         request.onreadystatechange = function() {
+			             if (this.readyState == 4 && this.status == 200) {
+			                    document.getElementById("cost").value = request.responseText;
+			             }
+			         };
+			var protocol = window.location.protocol;
+			var host = window.location.host;
+			var url = protocol+"//"+host+"/fare";         
+			request.open("POST", url, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.send(params)
+			         
+    	}
+    </script>
 </head>
 
 <body>
@@ -33,7 +56,7 @@
     </div>
 
     <!-- Header Section Begin -->
-	<%- include('header') %>
+    <%- include('header') %>
     <!-- Header End -->
 
     <!-- Hero Section Begin -->
@@ -49,18 +72,31 @@
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
-                        <h3>Find Cost Details</h3>
-                        <form action="#">
-                            <div class="check-date">
-                                <label for="date-in">From:</label>
-                                <input type="text" class="text" id="date-in">
+                    
+                        <h3>Cost Details</h3>
+                        
+                            <div class="select-option">From:<br>        
+                            <input list="brow" id="from" style="width: 100%">
+                            	<datalist id="brow">
+		                        	<% for(var i = 0;i<stations.length ; i++) { %>
+		                          		<option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+		                        	<% } %>
+		                    	</datalist>
+							</div>
+                            <div class="select-option">To:<br>        
+                            <input list="brow" id="to" style="width: 100%">
+                            	<datalist id="brow">
+		                        	<% for(var i = 0;i<stations.length ; i++) { %>
+		                          		<option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+		                        	<% } %>
+		                    	</datalist>
+							</div>
+                             <div class="check-date">
+                                <label for="cost">cost</label>
+                                <input type="text" readonly class="text" id="cost">
                             </div>
-                            <div class="check-date">
-                                <label for="date-out">To:</label>
-                                <input type="text" class="text" id="date-out">
-                            </div>
-                            <button type="submit">Get Cost</button>
-                        </form>
+                            <button onclick="get_fare()"><a >Get Fare</button>
+                        
                     </div>
                 </div>
             </div>

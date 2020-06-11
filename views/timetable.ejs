@@ -24,6 +24,22 @@
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+
+    <script>
+    	function getTime(){
+    		var tno = document.getElementById('trainNo').value;
+    		if(tno == ""){
+    			alert("please select a train");
+    			return;
+    		}
+    		var tno = tno.split("-");
+    		var trainNo = tno[0];
+    		var protocol = window.location.protocol;
+    		var host = window.location.host;
+    		var url = protocol+"//"+host+"/timetable/"+trainNo;
+    		window.location = url;
+    	}
+    </script>
 </head>
 
 <body>
@@ -51,13 +67,16 @@
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                         <h3>Find Trains</h3>
-                        <form action="#">
-                            <div class="check-date">
-                                <label for="date-in">Enter Train No</label>
-                                <input type="text" class="text" id="date-in">
+                            <div class="select-option">Enter Train No:<br>
+                            <input list="brow" id="trainNo" style="width: 100%">
+								<datalist id="brow">
+								<% for (var i = 0; i<stations.length; i++) { %>
+								  <option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+								<% } %>
+								</datalist>  
                             </div>
-                            <button type="submit"><a href="./searchtrains.html">GET DETAILS</a></button>
-                        </form>
+                            <button onclick="getTime()">GET DETAILS</button>
+                        
                     </div>
                 </div>
             </div>
@@ -196,6 +215,7 @@
     <script src="js/jquery.slicknav.js"></script>
     <script src="js/owl.carousel.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 
 </html>

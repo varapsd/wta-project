@@ -529,17 +529,17 @@ menu li a:after {
 	color: #19191a;
 	margin-bottom: 36px;
 }
-.booking-form form .check-date {
+.booking-form .check-date {
 	position: relative;
 	margin-bottom: 15px;
 }
-.booking-form form .check-date label {
+.booking-form  .check-date label {
 	font-size: 14px;
 	color: #707079;
 	display: block;
 	margin-bottom: 10px;
 }
-.booking-form form .check-date input {
+.booking-form .check-date input {
 	width: 100%;
 	height: 50px;
 	border: 1px solid #ebebeb;
@@ -550,22 +550,22 @@ menu li a:after {
 	font-weight: 500;
 	padding-left: 20px;
 }
-.booking-form form .check-date i {
+.booking-form .check-date i {
 	color: #dfa974;
 	position: absolute;
 	right: 18px;
 	bottom: 17px;
 }
-.booking-form form .select-option {
+.booking-form .select-option {
 	margin-bottom: 15px;
 }
-.booking-form form .select-option label {
+.booking-form .select-option label {
 	font-size: 14px;
 	color: #707079;
 	display: block;
 	margin-bottom: 10px;
 }
-.booking-form form .select-option .nice-select {
+.booking-form .select-option .nice-select {
 	border-radius: 2px;
 	border: 1px solid #ebebeb;
 	height: 50px;
@@ -575,7 +575,7 @@ menu li a:after {
 	width: 100%;
 	float: none;
 }
-.booking-form form .select-option .nice-select:after {
+.booking-form .select-option .nice-select:after {
 	border-bottom: 2px solid #dfa974;
 	border-right: 2px solid #dfa974;
 	height: 10px;
@@ -584,17 +584,17 @@ menu li a:after {
 	width: 10px;
 	top: 36%;
 }
-.booking-form form .select-option .nice-select span {
+.booking-form .select-option .nice-select span {
 	font-size: 16px;
 	color: #19191a;
 	text-transform: uppercase;
 	font-weight: 500;
 }
-.booking-form form .select-option .nice-select .list {
+.booking-form .select-option .nice-select .list {
 	margin-top: 0;
 	width: 100%;
 }
-.booking-form form button {
+.booking-form button {
 	display: block;
 	font-size: 14px;
 	text-transform: uppercase;
@@ -1442,17 +1442,17 @@ menu li a:after {
 	color: #19191a;
 	margin-bottom: 30px;
 }
-.room-booking form .check-date {
+.room-booking .check-date {
 	position: relative;
 	margin-bottom: 15px;
 }
-.room-booking form .check-date label {
+.room-booking .check-date label {
 	font-size: 14px;
 	color: #707079;
 	display: block;
 	margin-bottom: 10px;
 }
-.room-booking form .check-date input {
+.room-booking  .check-date input {
 	width: 100%;
 	height: 50px;
 	border: 1px solid #ebebeb;

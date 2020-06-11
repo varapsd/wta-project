@@ -24,6 +24,23 @@
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+
+	<script>
+		function searchTrains(){
+			var sst = document.getElementById('from').value.split("-");
+			var est = document.getElementById('to').value.split("-");
+			if(sst == "" || est ==""){
+				alert("please select stations");
+				return;
+			}
+			var ss =sst[0];
+			var es =est[0];
+			var params = ss+"-"+es;
+			window.location="/searchTrains/"+params;
+			         
+		}
+	</script>
+    
 </head>
 
 <body>
@@ -45,23 +62,31 @@
                     <div class="hero-text">
                         <h1>Metro Rail</h1>
                         <p></p>
-                        <a href="#" class="primary-btn">Discover Now</a>
+                        <a  class="primary-btn">Discover Now</a>
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                         <h3>Search Trains</h3>
-                        <form action="#">
-                            <div class="check-date">
-                                <label for="date-in">From:</label>
-                                <input type="text" class="text" id="date-in">
+                        
+							 <div class="select-option">From:<br>        
+							 	<input list="brow" id="from" style="width: 100%">
+								<datalist id="brow">
+									<% for(var i = 0;i<stations.length ; i++) { %>
+										<option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+									<% } %>
+								</datalist>  
                             </div>
-                            <div class="check-date">
-                                <label for="date-out">To:</label>
-                                <input type="text" class="text" id="date-out">
+                             <div class="select-option">To:<br>            
+                             	<input list="brow" id="to" style="width: 100%">
+								<datalist id="brow">
+									<% for(var i = 0;i<stations.length ; i++) { %>
+										<option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+									<% } %>
+								</datalist>  
                             </div>
-                            <button type="submit">Search</button>
-                        </form>
+                            <button onclick="searchTrains()">Search</button>
+                        
                     </div>
                 </div>
             </div>
