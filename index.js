@@ -15,6 +15,7 @@ conc.connect(function(err) {
   console.log("mysql Connected!");
 });
 
+var transport = require('./mail');
 
 app.use(session({
     secret: 'ssshhhhh',
@@ -39,7 +40,6 @@ app.get('/searchTrains/:params',(req,res)=>{
 	conc.query("call trains(?,?)",[s_station,e_station],(err,result,fields)=>{
 		if(err) return;
 		var trains = result[0];
-		console.log(trains);
 		res.render('searchResult.ejs',{trains : trains});
 	})
 	
@@ -52,25 +52,45 @@ app.get('/login',(req,res)=>{
 app.post('/loginCheck',(req,res)=>{
 	var userName = req.body.u;
 	var password = req.body.p;
-	var qry = "select uId from user where email = ? and uPassword = ?";
-	conc.query(qry,[userName,password],(err,validUser)=>{
-		if(err) res.send("failed");
-		else{
-			if(validUser.length != 0){
-				req.session.ID = validUser[0].uId;
-				req.session.client = "user";
+	if(userName == "admin"){
+			var adminqry = "select aId from admin where aId = ? and aPassword = ?;";
+			conc.query(adminqry,[1,password],(err,result)=>{
+				if(err) return console.log(err);
+				if(result.length != 0){
+				var admin = result[0];
+				req.session.ID = admin.aId;
+				req.session.client = "admin";
 				res.send("Success");
-			}
+				}
+				else{
+				res.send("failed");
+				}
+			})
+	}
+	else{
+		var qry = "select uId from user where email = ? and uPassword = ?";
+		conc.query(qry,[userName,password],(err,validUser)=>{
+			if(err) res.send("failed");
 			else{
-				res.send("no user found .. check again");
+				if(validUser.length != 0){
+					req.session.ID = validUser[0].uId;
+					req.session.client = "user";
+					res.send("Success");
+				}
+				else{
+					res.send("no user found .. check again");
+				}
+				
 			}
-			
-		}
-	})
+		})
+	}
 })
-
+//user
 var user = require('./routes/user');
 app.use('/user',user);
+//admin
+var admin = require('./routes/admin');
+app.use('/admin',admin);
 app.get('/register',(req,res)=>{
 	res.render('rg.ejs');
 })
@@ -91,8 +111,23 @@ app.post('/register',(req,res)=>{
 			conc.query(qry1,(err,total)=>{
 				var id = total[0].count + 1;
 				conc.query(qry,[id,name,phone,email,pwssd],(err,data)=>{
-					if(err) res.send('failed')
+					if(err) throw err;
 					else{
+
+					    	var mailOptions = {
+					      from: 'NoReply.MetroRail@gmail.com',
+					      to: email,
+					      subject: 'Successfully registered to Metro Account',
+					      
+					      html: '<h1>Thanks for registering</h1>',
+					    };
+					     
+					    transport.sendMail(mailOptions, (error, info) => {
+					      if (error) {
+					        return console.log(error);
+					      }
+					      console.log('Email sent: ' + info.response);
+					    });
 						res.send("Success");
 					}
 				})
@@ -111,6 +146,7 @@ app.post('/register',(req,res)=>{
 	*/
 })
 
+
 app.get('/fare',(req,res)=>{
 	conc.query("select sId,sName from station",(err,stations,fields)=>{		
 			res.render('fare.ejs',{stations : stations});
@@ -123,7 +159,6 @@ app.post('/fare',(req,res)=>{
 		if(err) res.send("error");
 		else{
 			var cost = result[0][0].cost.toString();
-			console.log(cost);
 			res.send(cost);
 		}
 	})
@@ -143,8 +178,5 @@ app.get('/timetable/:params',(req,res)=>{
 
 app.get('/contact',(req,res)=>{
 	res.render('contact.ejs');
-})
-app.get('/test',(req,res)=>{
-	res.render('./user/cardDetails.ejs');
 })
 app.listen(8081,()=> console.log("listening at 8081"));

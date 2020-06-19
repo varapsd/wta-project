@@ -13,7 +13,7 @@ uId INT PRIMARY KEY NOT NULL,
 uName VARCHAR (50) NOT NULL,
 uDob DATE,
 uSex CHAR (1),
-mobile INT,
+mobile BIGINT,
 email VARCHAR (50) NOT NULL,
 uPassword VARCHAR (15) NOT NULL);
 

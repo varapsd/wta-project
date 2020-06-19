@@ -29,11 +29,9 @@
     		var u = document.getElementById('userName').value;
     		var p = document.getElementById('password').value;
     		var params = "u="+u+"&p="+p;
-    		alert(params);
 			var protocol = window.location.protocol;
 			var host = window.location.host;
 			var url = protocol+"//"+host+"/loginCheck";
-			alert(url);
     		var request = new XMLHttpRequest();
 	         request.onreadystatechange = function() {
 	             if (this.readyState == 4 && this.status == 200) {

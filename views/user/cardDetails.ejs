@@ -31,22 +31,29 @@
     </style>
 	<script>
 	        function addMoney(){
-	        	var params = "helo=helo";
                 var protocol = window.location.protocol;
                 var host = window.location.host;
-                var url = protocol+"//"+host+"/user/masterCard";
-                alert(url);
+                var url = protocol+"//"+host+"/user/addMoney";
+                var amount = document.getElementById('amount').value;
+                if(amount == "" || amount < 10){
+                	alert("check the amount again");
+                	return ;
+                }
+                var id = <%= card.cId %>;
+                var params = "amount="+amount+"&id="+id;
 	                var request = new XMLHttpRequest();
 	                 request.onreadystatechange = function() {
 	                     if (this.readyState == 4 && this.status == 200) {
 	                        alert(request.responseText);
 	                        if(request.responseText == "Success"){
-	                                window.location = protocol+"//"+host+"/user";
+	                                window.location = protocol+"//"+host+"/user/masterCard";
 	                        }
+	                      }
 	                 };
 	                 request.open("POST", url, true);
 	                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-	                 request.send(params)
+	                 request.send(params);
+	                 
 	        }
 	    </script>
     
@@ -78,26 +85,26 @@
                     <div class="booking-form">
                         <h3 align="center">Master card</h3>
                         <div class="row cardRow">
-                        	<div class="col-3">
+                        	<div class="col-sm-3">
                         		<h4>Card No.</h4>
                         	</div>
-                        	<div class="col">
+                        	<div class="col-sm">
                         		<h4>: <%= card.cNo %></h4>
                         	</div>
                         </div>
                         <div class="row cardRow">
-                        	<div class="col-3">
+                        	<div class="col-sm-3">
                         		<h4>Exp Date</h4>
                         	</div>
-                        	<div class="col">
+                        	<div class="col-sm">
                         		<h4>: <%= card.expDate %></h4>
                         	</div>
                         </div>
                         <div class="row cardRow">
-                        	<div class="col-3">
+                        	<div class="col-sm-3">
                         		<h4>Wallet(Rs.)</h4>
                         	</div>
-                        	<div class="col">
+                        	<div class="col-sm">
                         		<h4>: <%= card.wallet %></h4>
                         	</div>
                         </div>
@@ -107,7 +114,7 @@
                         	</div>
                         </div>
                         <div class="row">
-                        	<input class="form-control" type="number" placeholder="enter amount(min 10 rs.)"></input>
+                        	<input class="form-control" type="number" id="amount" placeholder="enter amount(min 10 rs.)"></input>
                         	<button onclick="addMoney()">Add</button>
                         </div>
                     </div>

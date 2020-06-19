@@ -31,7 +31,6 @@ router.get('/searchTrains/:params',(req,res)=>{
 		        conc.query("call trains(?,?)",[s_station,e_station],(err,result,fields)=>{
 		                if(err) return;
 		                var trains = result[0];
-		                console.log(trains);
 		                res.render('./user/searchResult.ejs',{trains : trains});
 		        })				
 			}
@@ -73,7 +72,6 @@ router.post('/fare',(req,res)=>{
                 if(err) res.send("error");
                 else{
                         var cost = result[0][0].cost.toString();
-                        console.log(cost);
                         res.send(cost);
                 }
         })
@@ -145,7 +143,6 @@ router.get('/masterCard',(req,res)=>{
 				}
 				else{
 					var card = data[0];
-					console.log(card);
 					res.render('./user/cardDetails.ejs',{card : card});
 				}
 			})
@@ -210,6 +207,16 @@ uId INT NOT NULL,
 FOREIGN KEY(uId) REFERENCES user(uId));
 */
 //logout
+
+router.post('/addMoney',(req,res)=>{
+	var amount = req.body.amount;
+	var cId = req.body.id;
+	var qry = "update masterCard set wallet = wallet+? where cId = ?;"
+	conc.query(qry,[amount,cId],(err,data)=>{
+		if(err) throw err;
+		res.send('Success');
+	})
+})
 router.get('/logout',(req,res)=>{
         req.session.destroy((err,data)=>{
                 res.redirect('/');

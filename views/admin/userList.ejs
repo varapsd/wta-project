@@ -24,27 +24,6 @@
     <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
-
-    <script>
-            function addCard(){
-                var protocol = window.location.protocol;
-                var host = window.location.host;
-                var url = protocol+"//"+host+"/user/createMasterCard";
-                var params = "helo=helo";
-                var request = new XMLHttpRequest();
-                 request.onreadystatechange = function() {
-                     if (this.readyState == 4 && this.status == 200) {
-                        alert(request.responseText);
-                        if(request.responseText == "Success"){
-                        	window.location = protocol+"//"+host+"/user/masterCard";
-                        }
-                     }
-                 };
-                 request.open("POST", url, true);
-                 request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
-                 request.send(params);
-          	}
-        </script>
 </head>
 
 <body>
@@ -70,16 +49,29 @@
                     </div>
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
-                    <div class="booking-form">
-                        <h3>Master card</h3>
+                    <div class="booking-form table-responsive">
+                         <h3>Userslist:</h3>
+							<table class="table table-striped" >
+	                            <thead>
+	                             <tr>
+	                               <th>Sno</th>
+	                               <th>Name</th>
+	                               <th>Phone</th>
+	                               <th>Wallet</th>
+	                             </tr>
+                            	</thead>
+                             	<% for(var i = 0 ;i< users.length ;i++){ %>
+                                 <tr>
+                                    <td><%= users[i].uId %></td>
+                                    <td><%= users[i].uName %></td>
+                                    <td><%= users[i].mobile %></td>
+                                    <td><%= users[i].wallet %></td>
+                                 </tr>
+                             	<% } %>
+                           	</table>                        
                         
-                          *Metro Rail smart card acts as a virtual wallet that facilitates seamless travel.<br>*A smart card can be purchased from a ticketing office at any Metro station.<br>*A non-refundable admin charge of INR 20/- is collected at the time of the purchase. <br>*You need to maintain a standing balance of INR 10/- in your smart card to travel by Metro Rail. All Metro offers and discounts will be applicable only on smart cards.<br>* Please note that in case your Hyderabad Metro smart card is lost, stolen or damaged, you have to buy a new smart card and the balance amount will not be refunded.
-
-                          <br>*A smart card can be recharged for a minimum amount of INR 50/- and maximum amount of INR 3000/-
-
- 
-                            <button type="submit" onclick="addCard()"><a>Apply Now</a></button>
-                       
+                  </div>
+                           
                     </div>
                 </div>
             </div>
@@ -111,7 +103,7 @@
                     <div class="about-pic">
                         <div class="row">
                             <div class="col-sm-6">
-                                <img src="/img/about/about-1.jpg" alt="">
+                                <img src="img/about/about-1.jpg" alt="">
                             </div>
                             <div class="col-sm-6">
                                 <img src="/img/about/about-2.jpg" alt="">
