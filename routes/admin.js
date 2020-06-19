@@ -82,6 +82,51 @@ router.get('/userList',(req,res)=>{
 		res.redirect('/');
 	}
 })
+
+router.get('/notify',(req,res)=>{
+	if(req.session.ID){
+		if(req.session.client == "admin"){
+			res.render('./admin/notify.ejs');
+		}
+		else if(req.session.client == "user"){
+			res.redirect('/user');
+		}
+		else{
+			res.redirect('/logout');
+		}
+	}
+	else{
+		res.redirect('/');
+	}
+})
+router.post('/sendMail',(req,res)=>{
+	var subject = req.body.subject;
+	var body = req.body.body;
+	var qry = "select email from user;"
+	conc.query(qry,(err,result)=>{
+		if(err) throw err;
+		var emails = [];
+		for( let i = 0 ; i<result.length;i++){
+			emails.push(result[i].email);
+		}
+		var mailOptions = {
+	       from: 'NoReply.MetroRail@gmail.com',
+	       to: emails,
+	       subject: subject,
+
+	       html: '<h1>'+body+'</h1>',
+	     };
+	   transport.sendMail(mailOptions, (error, info) => {
+       if (error) {
+       		res.send("error occured");
+         return console.log(error);
+       }
+       console.log('Email sent: ' + info.response);
+       res.send("mail to all registered users");
+     });
+	})
+	
+})
 router.get('/logout',(req,res)=>{
         req.session.destroy((err,data)=>{
                 res.redirect('/');
@@ -89,3 +134,20 @@ router.get('/logout',(req,res)=>{
 })
 
 module.exports = router;
+
+/*
+var mailOptions = {
+       from: 'NoReply.MetroRail@gmail.com',
+       to: email,
+       subject: 'Successfully registered to Metro Account',
+
+       html: '<h1>Thanks for registering</h1>',
+     };
+
+     transport.sendMail(mailOptions, (error, info) => {
+       if (error) {
+         return console.log(error);
+       }
+       console.log('Email sent: ' + info.response);
+     });
+*/

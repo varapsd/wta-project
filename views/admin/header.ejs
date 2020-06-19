@@ -28,11 +28,9 @@
                                     <li><a onclick="stationList()">Stations</a></li>
                                     <li><a onclick="userList()">Users</a></li>
                                     <li><a onclick="notify()">Send a Notification</a></li>
+                                    <li><a onclick="logout()">Logout</a></li>
                                 </ul>
                             </nav>
-                            <div class="nav-right search-switch">
-                                <i class="icon_search"></i>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -59,6 +57,10 @@
         	}
         	function notify(){
         		var url = protocol+"//"+host+"/admin/notify";
+        		window.location = url;
+        	}
+        	function logout(){
+        		var url = protocol+"//"+host+"/admin/logout";
         		window.location = url;
         	}
         </script>

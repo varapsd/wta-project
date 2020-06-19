@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="zxx">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Sona Template">
+    <meta name="keywords" content="Sona, unica, creative, html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Metro Rail </title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css?family=Lora:400,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
+
+    <!-- Css Styles -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+    	function mailSend(){
+    		var subject = document.getElementById('subject').value;
+    		var body = document.getElementById('message').value;
+    		alert(subject);
+    		alert(body);
+    		if( subject == "" || body == ""){
+    			alert('subject and body both required!');
+    			return;
+    		}
+    		params = "subject="+subject+"&body="+body;
+            var protocol = window.location.protocol;
+            var host = window.location.host;
+            var url = protocol+"//"+host+"/admin/sendMail";
+            var request = new XMLHttpRequest();
+             request.onreadystatechange = function() {
+                 if (this.readyState == 4 && this.status == 200) {
+                       alert(request.responseText);
+                 }
+             };
+             request.open("POST", url, true);
+             request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+             request.send(params)
+    	}
+    </script>
+</head>
+
+<body>
+    <!-- Page Preloder -->
+    <div id="preloder">
+        <div class="loader"></div>
+    </div>
+    
+
+    <!-- Header Section Begin -->
+    <%- include('header') %>
+    <!-- Header End -->
+
+    <!-- Hero Section Begin -->
+    <section class="hero-section">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="hero-text">
+                        <h1>Metro Rail</h1>
+                        <p></p>
+                        <a href="#" class="primary-btn">Discover Now</a>
+                    </div>
+                </div>
+                <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
+                    <div class="booking-form">
+                    	<h3> Notify Users with a mail</h3>
+                    	<p> A Mail to all the users </p>
+                    	<div class="form-group row">
+                    	    <label for="subject" class="col-sm-2 col-form-label">Subject</label>
+                    	    <div class="col-sm-10">
+                    	      <input type="text" class="form-control" id="subject" placeholder="subject">
+                    	    </div>
+                    	</div>
+                    	<div class="form-group">
+                    	    <label for="message">Message Body</label>
+                    	    <textarea class="form-control" id="message" rows="3"></textarea>
+                    	</div>
+                    	<div>
+                    		<button class="form-control" onclick="mailSend()">send</button>
+                    	</div>
+                  	</div>
+                </div>
+            </div>
+        </div>
+        <div class="hero-slider owl-carousel">
+            <div class="hs-item set-bg" data-setbg="/img/hero/hero-1.jpg"></div>
+            <div class="hs-item set-bg" data-setbg="/img/hero/hero-2.jpg"></div>
+            <div class="hs-item set-bg" data-setbg="/img/hero/hero-3.jpg"></div>
+        </div>
+    </section>
+    <!-- Hero Section End -->
+
+    <!-- About Us Section Begin -->
+    <section class="aboutus-section spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="about-text">
+                        <div class="section-title">
+                            <span>About Us</span>
+                            <h2>Metro<br />Rail</h2>
+                        </div>
+                        <p class="f-para">The Metro railway system and service are operational in 10 cities in India. These are Kolkata, Delhi, Bengaluru, Gurugram, Mumbai, Chennai, Jaipur, Kochi, Hyderabad, and Lucknow. The Kolkata Metro rail is the oldest metro service in the country.</p>
+                        <p class="s-para">Metro Rail Project was First initiated by then Chief Minister of United Andhra Pradesh state, N. Chandrababu Naidu in 2003 [22] as Hyderabad continued to grow, the MMTS had insufficient capacity for public transport.</p>
+                        <a href="#" class="primary-btn about-btn">Read More</a>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about-pic">
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <img src="img/about/about-1.jpg" alt="">
+                            </div>
+                            <div class="col-sm-6">
+                                <img src="/img/about/about-2.jpg" alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- About Us Section End -->
+
+    <!-- Services Section End -->
+  
+    <!-- Services Section End -->
+
+    <!-- Home Room Section Begin -->
+
+    <!-- Footer Section Begin -->
+    <footer class="footer-section">
+        <div class="container">
+            <div class="footer-text">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="ft-about">
+                            <div class="logo">
+                                <a href="#">
+                                    <img src="/img/footer-logo.png" alt="">
+                                </a>
+                            </div>
+                            <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>
+                            <div class="fa-social">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                <a href="#"><i class="fa fa-tripadvisor"></i></a>
+                                <a href="#"><i class="fa fa-instagram"></i></a>
+                                <a href="#"><i class="fa fa-youtube-play"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="ft-contact">
+                            <h6>Contact Us</h6>
+                            <ul>
+                                <li>1800 888 333</li>
+                                <li>info.metrorail@gmail.com</li>
+                                <li>Hyderabad,Metrorail,Hytechcity-mainbranch-4657</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 offset-lg-1">
+                        <div class="ft-newslatter">
+                            <h6>New latest</h6>
+                            <p>Get the latest updates and offers.</p>
+                            <form action="#" class="fn-form">
+                                <input type="text" placeholder="Email">
+                                <button type="submit"><i class="fa fa-send"></i></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="copyright-option">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-7">
+                        <ul>
+                            <li><a href="#">Contact</a></li>
+                            <li><a href="#">Terms of use</a></li>
+                            <li><a href="#">Privacy</a></li>
+                            <li><a href="#">Environmental Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="co-text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Metrorail</a>
+ 
+ </p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Footer Section End -->
+
+    <!-- Search model Begin -->
+    <div class="search-model">
+        <div class="h-100 d-flex align-items-center justify-content-center">
+            <div class="search-close-switch"><i class="icon_close"></i></div>
+            <form class="search-model-form">
+                <input type="text" id="search-input" placeholder="Search here.....">
+            </form>
+        </div>
+    </div>
+    <!-- Search model end -->
+
+    <!-- Js Plugins -->
+    <script src="/js/jquery-3.3.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/jquery.magnific-popup.min.js"></script>
+    <script src="/js/jquery.nice-select.min.js"></script>
+    <script src="/js/jquery-ui.min.js"></script>
+    <script src="/js/jquery.slicknav.js"></script>
+    <script src="/js/owl.carousel.min.js"></script>
+    <script src="/js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</body>
+
+</html>
