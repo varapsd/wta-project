@@ -24,6 +24,29 @@
     <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+    	function get_fare(){
+			var request = new XMLHttpRequest();
+			var stStation = document.getElementById('from').value.split("-");
+			var esStation = document.getElementById('to').value.split("-");
+			var ss = stStation[0];
+			var es = esStation[0];
+			var params =  "ss="+ss+"&es="+es;
+			         request.onreadystatechange = function() {
+			             if (this.readyState == 4 && this.status == 200) {
+			                    document.getElementById("cost").value = request.responseText;
+			             }
+			         };
+			var protocol = window.location.protocol;
+			var host = window.location.host;
+			var url = protocol+"//"+host+"/user/fare";         
+			request.open("POST", url, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.send(params)
+			         
+    	}
+    </script>
 </head>
 
 <body>
@@ -50,26 +73,30 @@
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                     
-                        <h3>Register Here</h3>
-						                        
-                            <div class="check-date">
-                            	<label for="name"><b>Name</b></label>
-                                <input type="text" placeholder="Enter Name" name="name" id="name" required>
-                                 <label for="phone"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required>
-                                 <label for="email"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+                        <h3>Cost Details</h3>
+                        
+                            <div class="select-option">From:<br>        
+                            <input list="brow" id="from" style="width: 100%">
+                            	<datalist id="brow">
+		                        	<% for(var i = 0;i<stations.length ; i++) { %>
+		                          		<option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+		                        	<% } %>
+		                    	</datalist>
+							</div>
+                            <div class="select-option">To:<br>        
+                            <input list="brow" id="to" style="width: 100%">
+                            	<datalist id="brow">
+		                        	<% for(var i = 0;i<stations.length ; i++) { %>
+		                          		<option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+		                        	<% } %>
+		                    	</datalist>
+							</div>
+                             <div class="check-date">
+                                <label for="cost">cost</label>
+                                <input type="text" readonly class="text" id="cost">
                             </div>
-                            <div class="check-date">
-                            
-                                <label for="psw"><b>Password</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-                                 <label for="psw-repeat"><b>Repeat Password</b></label>
-                                 <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-    						
-                            </div>
-                            <button onclick="register()">Submit</button>
-                       
+                            <button onclick="get_fare()"><a >Get Fare</button>
+                        
                     </div>
                 </div>
             </div>

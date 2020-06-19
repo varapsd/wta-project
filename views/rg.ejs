@@ -14,16 +14,51 @@
     <link href="https://fonts.googleapis.com/css?family=Cabin:400,500,600,700&display=swap" rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="/css/flaticon.css" type="text/css">
-    <link rel="stylesheet" href="/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/nice-select.css" type="text/css">
-    <link rel="stylesheet" href="/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="/css/style.css" type="text/css">
+    <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="css/flaticon.css" type="text/css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="css/nice-select.css" type="text/css">
+    <link rel="stylesheet" href="css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script>
+    	function Register(){
+    		var ps1 = document.getElementById('psw').value;
+    		var ps2 = document.getElementById('psw-repeat').value;
+    		if(ps1 != ps2){
+    			document.getElementById('Lerror').innerHTML = "password not matching";
+    			return;
+    		}
+    		var n = document.getElementById('name1').value;
+    		var e = document.getElementById('email').value;
+    		var p = document.getElementById('phone').value;
+    		if( n=="" || e=="" || p=="" || ps1==""){
+    			document.getElementById('Lerror').innerHTML = "all fields required";
+    			return;
+    		}
+    		var params = "n="+n+"&e="+e+"&p="+p+"&ps="+ps1;
+			var protocol = window.location.protocol;
+			var host = window.location.host;
+			var url = protocol+"//"+host+"/register";
+    		var request = new XMLHttpRequest();
+	         request.onreadystatechange = function() {
+	             if (this.readyState == 4 && this.status == 200) {
+					alert(request.responseText);
+	                if(request.responseText == "Success"){
+	                	document.getElementById('Lerror').innerHTML = "successfuly registered please login";
+	                }
+	                else
+	                        document.getElementById("Lerror").innerHTML = "sorry try again";
+	             }
+	         };
+	         request.open("POST", url, true);
+	         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	         request.send(params)
+    	}
+    </script>
 </head>
 
 <body>
@@ -49,35 +84,40 @@
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
-                    
-                        <h3>Register Here</h3>
-						                        
+                        <h3>Register here</h3>
+                        
                             <div class="check-date">
-                            	<label for="name"><b>Name</b></label>
-                                <input type="text" placeholder="Enter Name" name="name" id="name" required>
-                                 <label for="phone"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required>
-                                 <label for="email"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+                                <label for="name1"><b>Namee</b></label>
+                                <input type="text" placeholder="Enter Name" id="name1" name="name1" required>
                             </div>
                             <div class="check-date">
+                                <label for="phone"><b>Phone</b></label>
+                                <input type="text" placeholder="Enter Phone number" id="phone" name="phone" required>
+                            </div>
+                            <div class="check-date">
+                                <label for="email"><b>Email</b></label>
+                                <input type="text" placeholder="Enter Email" id="email" name="email" required>
+                            </div>
+                            <div class="check-date">
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
+                            </div>
+                            <div class="check-date">
+                            <label for="psw-repeat"><b>Password again</b></label>
+                            <input type="password" placeholder="Enter Password again" name="psw-repeat" id="psw-repeat" required>
+                            </div>
+                            <button onclick="Register()">Register</button>
+                            <div id="Lerror"></div>
                             
-                                <label for="psw"><b>Password</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-                                 <label for="psw-repeat"><b>Repeat Password</b></label>
-                                 <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-    						
-                            </div>
-                            <button onclick="register()">Submit</button>
-                       
+                        
                     </div>
                 </div>
             </div>
         </div>
         <div class="hero-slider owl-carousel">
-            <div class="hs-item set-bg" data-setbg="/img/hero/hero-1.jpg"></div>
-            <div class="hs-item set-bg" data-setbg="/img/hero/hero-2.jpg"></div>
-            <div class="hs-item set-bg" data-setbg="/img/hero/hero-3.jpg"></div>
+            <div class="hs-item set-bg" data-setbg="img/hero/hero-1.jpg"></div>
+            <div class="hs-item set-bg" data-setbg="img/hero/hero-2.jpg"></div>
+            <div class="hs-item set-bg" data-setbg="img/hero/hero-3.jpg"></div>
         </div>
     </section>
     <!-- Hero Section End -->
@@ -101,10 +141,10 @@
                     <div class="about-pic">
                         <div class="row">
                             <div class="col-sm-6">
-                                <img src="/img/about/about-1.jpg" alt="">
+                                <img src="img/about/about-1.jpg" alt="">
                             </div>
                             <div class="col-sm-6">
-                                <img src="/img/about/about-2.jpg" alt="">
+                                <img src="img/about/about-2.jpg" alt="">
                             </div>
                         </div>
                     </div>
@@ -116,7 +156,10 @@
 
     <!-- Services Section End -->
     
+    
     <!-- Services Section End -->
+
+    <!-- Home Room Section Begin -->
 
     <!-- Footer Section Begin -->
     <footer class="footer-section">
@@ -127,7 +170,7 @@
                         <div class="ft-about">
                             <div class="logo">
                                 <a href="#">
-                                    <img src="/img/footer-logo.png" alt="">
+                                    <img src="img/footer-logo.png" alt="">
                                 </a>
                             </div>
                             <p>We inspire and reach millions of travelers<br /> across 90 local websites</p>
@@ -197,14 +240,14 @@
     <!-- Search model end -->
 
     <!-- Js Plugins -->
-    <script src="/js/jquery-3.3.1.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.magnific-popup.min.js"></script>
-    <script src="/js/jquery.nice-select.min.js"></script>
-    <script src="/js/jquery-ui.min.js"></script>
-    <script src="/js/jquery.slicknav.js"></script>
-    <script src="/js/owl.carousel.min.js"></script>
-    <script src="/js/main.js"></script>
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/jquery.magnific-popup.min.js"></script>
+    <script src="js/jquery.nice-select.min.js"></script>
+    <script src="js/jquery-ui.min.js"></script>
+    <script src="js/jquery.slicknav.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

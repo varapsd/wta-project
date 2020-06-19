@@ -8,12 +8,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 const mysql = require('mysql');
-var conc = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "vara",
-  database: "mydb"
-});
+var conc = require('./connection');
 
 conc.connect(function(err) {
   if (err) throw err;
@@ -53,9 +48,69 @@ app.get('/searchTrains/:params',(req,res)=>{
 app.get('/login',(req,res)=>{
 	res.render('login.ejs');
 })
-app.get('/register',(req,res)=>{
-	res.render('register.ejs');
+
+app.post('/loginCheck',(req,res)=>{
+	var userName = req.body.u;
+	var password = req.body.p;
+	var qry = "select uId from user where email = ? and uPassword = ?";
+	conc.query(qry,[userName,password],(err,validUser)=>{
+		if(err) res.send("failed");
+		else{
+			if(validUser.length != 0){
+				req.session.ID = validUser[0].uId;
+				req.session.client = "user";
+				res.send("Success");
+			}
+			else{
+				res.send("no user found .. check again");
+			}
+			
+		}
+	})
 })
+
+var user = require('./routes/user');
+app.use('/user',user);
+app.get('/register',(req,res)=>{
+	res.render('rg.ejs');
+})
+app.post('/register',(req,res)=>{
+	var name = req.body.n;
+	var email = req.body.e;
+	var pwssd = req.body.ps;
+	var phone = req.body.p;
+	var check = "select uId from user where email = ?;";
+	var qry1 = "select count(uId) count from user;";
+	var qry = "insert into user(uid,uName,mobile,email,uPassword) values(?,?,?,?,?);";
+	conc.query(check,[email],(err,usr)=>{
+		if(err) return res.send('falied');
+		if(usr.length != 0){
+			res.send("already user exists with this email");
+		}
+		else{
+			conc.query(qry1,(err,total)=>{
+				var id = total[0].count + 1;
+				conc.query(qry,[id,name,phone,email,pwssd],(err,data)=>{
+					if(err) res.send('failed')
+					else{
+						res.send("Success");
+					}
+				})
+			})
+		}
+	})
+	/*
+	CREATE TABLE user (
+	uId INT PRIMARY KEY NOT NULL,
+	uName VARCHAR (50) NOT NULL,
+	uDob DATE,
+	uSex CHAR (1),
+	mobile INT,
+	email VARCHAR (50) NOT NULL,
+	uPassword VARCHAR (15) NOT NULL);
+	*/
+})
+
 app.get('/fare',(req,res)=>{
 	conc.query("select sId,sName from station",(err,stations,fields)=>{		
 			res.render('fare.ejs',{stations : stations});
@@ -89,5 +144,7 @@ app.get('/timetable/:params',(req,res)=>{
 app.get('/contact',(req,res)=>{
 	res.render('contact.ejs');
 })
-
+app.get('/test',(req,res)=>{
+	res.render('./user/cardDetails.ejs');
+})
 app.listen(8081,()=> console.log("listening at 8081"));

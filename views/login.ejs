@@ -24,6 +24,32 @@
     <link rel="stylesheet" href="css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="css/style.css" type="text/css">
+    <script>
+    	function loginCheck(){
+    		var u = document.getElementById('userName').value;
+    		var p = document.getElementById('password').value;
+    		var params = "u="+u+"&p="+p;
+    		alert(params);
+			var protocol = window.location.protocol;
+			var host = window.location.host;
+			var url = protocol+"//"+host+"/loginCheck";
+			alert(url);
+    		var request = new XMLHttpRequest();
+	         request.onreadystatechange = function() {
+	             if (this.readyState == 4 && this.status == 200) {
+					alert(request.responseText);
+	                if(request.responseText == "Success"){
+	                        window.location = protocol+"//"+host+"/user";
+	                }
+	                else
+	                        document.getElementById("Lerror").innerHTML = "try again";
+	             }
+	         };
+	         request.open("POST", url, true);
+	         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+	         request.send(params)
+    	}
+    </script>
 </head>
 
 <body>
@@ -50,21 +76,22 @@
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
                         <h3>Login Here</h3>
-                        <form action="#">
+                        
                             <div class="check-date">
                                 <label for="uname"><b>Username</b></label>
-                                <input type="text" placeholder="Enter Username" name="uname" required>
+                                <input type="text" placeholder="Enter Username" id="userName" name="uname" required>
 
                             </div>
                             <div class="check-date">
-                               <label for="psw"><b>Password</b></label>
-                               <input type="password" placeholder="Enter Password" name="psw" required>
+                            <label for="psw"><b>Password</b></label>
+                            <input type="password" placeholder="Enter Password" name="psw" id="password" required>
                             </div>
-                            <button type="submit">login</button>
+                            <button onclick="loginCheck()">login</button>
+                            <div id="Lerror"></div>
                             <label>
                             <input type="checkbox" checked="checked" name="remember"> Remember me
                              </label>
-                        </form>
+                        
                     </div>
                 </div>
             </div>

@@ -24,6 +24,22 @@
     <link rel="stylesheet" href="/css/magnific-popup.css" type="text/css">
     <link rel="stylesheet" href="/css/slicknav.min.css" type="text/css">
     <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+    	function getTime(){
+    		var tno = document.getElementById('trainNo').value;
+    		if(tno == ""){
+    			alert("please select a train");
+    			return;
+    		}
+    		var tno = tno.split("-");
+    		var trainNo = tno[0];
+    		var protocol = window.location.protocol;
+    		var host = window.location.host;
+    		var url = protocol+"//"+host+"/user/timetable/"+trainNo;
+    		window.location = url;
+    	}
+    </script>
 </head>
 
 <body>
@@ -31,6 +47,7 @@
     <div id="preloder">
         <div class="loader"></div>
     </div>
+    
 
     <!-- Header Section Begin -->
     <%- include('header') %>
@@ -49,27 +66,17 @@
                 </div>
                 <div class="col-xl-4 col-lg-5 offset-xl-2 offset-lg-1">
                     <div class="booking-form">
-                    
-                        <h3>Register Here</h3>
-						                        
-                            <div class="check-date">
-                            	<label for="name"><b>Name</b></label>
-                                <input type="text" placeholder="Enter Name" name="name" id="name" required>
-                                 <label for="phone"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Phone Number" name="phone" id="phone" required>
-                                 <label for="email"><b>Email</b></label>
-                                <input type="text" placeholder="Enter Email" name="email" id="email" required>
+                        <h3>Find Trains</h3>
+                            <div class="select-option">Enter Train No:<br>
+                            <input list="brow" id="trainNo" style="width: 100%">
+								<datalist id="brow">
+								<% for (var i = 0; i<stations.length; i++) { %>
+								  <option value="<%= stations[i].sId+"-"+stations[i].sName %>">
+								<% } %>
+								</datalist>  
                             </div>
-                            <div class="check-date">
-                            
-                                <label for="psw"><b>Password</b></label>
-                                <input type="password" placeholder="Enter Password" name="psw" id="psw" required>
-                                 <label for="psw-repeat"><b>Repeat Password</b></label>
-                                 <input type="password" placeholder="Repeat Password" name="psw-repeat" id="psw-repeat" required>
-    						
-                            </div>
-                            <button onclick="register()">Submit</button>
-                       
+                            <button onclick="getTime()">GET DETAILS</button>
+                        
                     </div>
                 </div>
             </div>
@@ -115,8 +122,10 @@
     <!-- About Us Section End -->
 
     <!-- Services Section End -->
-    
+  
     <!-- Services Section End -->
+
+    <!-- Home Room Section Begin -->
 
     <!-- Footer Section Begin -->
     <footer class="footer-section">
@@ -144,9 +153,9 @@
                         <div class="ft-contact">
                             <h6>Contact Us</h6>
                             <ul>
-                                <li>(12) 345 67890</li>
+                                <li>1800 888 333</li>
                                 <li>info.metrorail@gmail.com</li>
-                                <li>856 Cordia Extension Apt. 356, Lake, United State</li>
+                                <li>Hyderabad,Metrorail,Hytechcity-mainbranch-4657</li>
                             </ul>
                         </div>
                     </div>
@@ -176,8 +185,9 @@
                     </div>
                     <div class="col-lg-5">
                         <div class="co-text"><p><!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
-  <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. --></p></div>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This template is made with <i class="fa fa-heart" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Metrorail</a>
+ 
+ </p></div>
                     </div>
                 </div>
             </div>
@@ -205,6 +215,7 @@
     <script src="/js/jquery.slicknav.js"></script>
     <script src="/js/owl.carousel.min.js"></script>
     <script src="/js/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 </body>
 
 </html>
