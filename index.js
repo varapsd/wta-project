@@ -85,6 +85,33 @@ app.post('/loginCheck',(req,res)=>{
 		})
 	}
 })
+
+app.post('/help',(req,res)=>{
+	var email = req.body.id;
+	var qry = 'select email,uPassword from user where email = ?;';
+	conc.query(qry,[email],(err,result)=>{
+		if(err) return console.log(err);
+		if(result.length == 0){
+			res.send('Please register! this email doest have account');
+		}
+		else{
+			var mailPass = {
+            	from: 'NoReply.MetroRail@gmail.com',
+                to: result[0].email,
+                subject:'Requested for password',
+                html: '<h1> This contains your password</h1><br><h4>password :'+result[0].uPassword+'</h4>',
+               };
+
+               transport.sendMail(mailPass, (error, info) => {
+                    if (error) {
+                       return console.log(error);
+                    }
+              		console.log('Email sent: ' + info.response);
+					res.send('password sent to your registered email!. Check it')
+               });
+		}
+	})
+})
 //user
 var user = require('./routes/user');
 app.use('/user',user);

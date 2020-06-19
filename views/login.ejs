@@ -47,6 +47,23 @@
 	         request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 	         request.send(params)
     	}
+    	function help(){
+    		var email = document.getElementById('userName').value;
+    		var id = prompt("enter your email id",email);
+			var params = "id="+id;
+			var protocol = window.location.protocol;
+			var host = window.location.host;
+			var url = protocol+"//"+host+"/help";
+			var request = new XMLHttpRequest();
+			request.onreadystatechange = function() {
+				if (this.readyState == 4 && this.status == 200) {
+					alert(request.responseText);
+			    }
+			}
+			request.open("POST", url, true);
+			request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			request.send(params)
+    	}
     </script>
 </head>
 
@@ -87,7 +104,7 @@
                             <button onclick="loginCheck()">login</button>
                             <div id="Lerror"></div>
                             <label>
-                            <input type="checkbox" checked="checked" name="remember"> Remember me
+                            <a onclick ="help()" style="color : skyblue">need help ?</a>
                              </label>
                         
                     </div>
